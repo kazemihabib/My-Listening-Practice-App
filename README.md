@@ -1,24 +1,29 @@
 # Listening Practice App
 
-> **Personal project.** This was built for personal use, mostly with AI assistance. Feel free to use it, but don't expect support, maintenance, or updates. Use it as-is and adapt it to your own needs.
+> **Personal project, macOS only.** Built for personal use on Apple Silicon, mostly with AI assistance. Licensed under [MIT](LICENSE). Feel free to use or adapt it, but don't expect support, maintenance, or updates.
 
 A terminal app to improve listening comprehension. It splits an audio file into natural chunks using Whisper, plays each chunk, and asks you to type what you heard. You then see a word-by-word comparison with the correct transcript.
 
+## Requirements
+
+- macOS with Apple Silicon (M1/M2/M3/…)
+- [`uv`](https://docs.astral.sh/uv/) package manager
+
+> The app relies on `afplay` (macOS built-in) for audio playback and `mlx-whisper` (Apple's MLX framework) for transcription. Neither works outside macOS on Apple Silicon.
+
 ## How it works
 
-1. **Transcribe** – Whisper (running locally via MLX on Apple Silicon) transcribes the audio and produces timestamped segments.
+1. **Transcribe** – Whisper (running locally via MLX) transcribes the audio and produces timestamped segments.
 2. **Chunk** – Segments are merged into natural practice chunks at sentence boundaries.
 3. **Practice loop** – For each chunk:
    - The audio plays automatically.
    - You type what you heard and press Enter.
    - Your answer is compared word-by-word to the correct text:
      - **Green** = correct word
-     - **Red** = wrong or extra word
-     - **Yellow** = missed word (shown in the correct line)
+     - **Red** = wrong or extra word (in your answer)
+     - Missed words are shown in the correct line
 
 ## Installation
-
-Install once as a global terminal command:
 
 ```bash
 uv tool install /path/to/my_listening_app
@@ -33,7 +38,7 @@ listen podcast.mp3
 # Resume from chunk 10
 listen lesson.m4a --start 10
 
-# Specify language (faster transcription, more accurate)
+# Specify language (faster + more accurate transcription)
 listen audio.mp3 --language it
 
 # Tighter chunks
@@ -74,7 +79,7 @@ Config is stored at `~/.config/listen/config.json`. Run `listen --help` to see y
 
 ## Transcript cache
 
-On first run, after transcription you'll be asked whether to save the transcript. If saved, a `.chunks.json` file is placed next to the audio file. On subsequent runs you'll be prompted to use the cached version or regenerate.
+On first run you'll be asked whether to save the transcript. If saved, a `.chunks.json` file is placed next to the audio file. On subsequent runs you'll be prompted to use the cached version or regenerate.
 
 ## Models
 
@@ -86,8 +91,6 @@ On first run, after transcription you'll be asked whether to save the transcript
 
 Models are downloaded automatically on first use from Hugging Face.
 
-## Requirements
+## License
 
-- macOS (uses `afplay` for audio playback)
-- Apple Silicon Mac (MLX)
-- `uv` package manager
+[MIT](LICENSE) © Habib Kazemi
