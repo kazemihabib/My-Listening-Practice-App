@@ -1,0 +1,15 @@
+[project]
+name = "my-listening-app"
+version = "0.1.0"
+description = "Terminal listening practice app – type what you hear, chunk by chunk."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "audioop-lts>=0.2.2",
+    "gnureadline>=8.3.3",
+    "mlx-whisper>=0.4.3",
+    "pydub>=0.25.1",
+]
+
+[project.scripts]
+listen = "app:main"
